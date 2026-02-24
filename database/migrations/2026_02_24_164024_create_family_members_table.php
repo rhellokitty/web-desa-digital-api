@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('head_of_families', function (Blueprint $table) {
+        Schema::create('family_members', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
+            $table->foreignUuid('head_of_family_id')->constrained('head_of_families');
             $table->foreignUuid('user_id')->constrained('users');
 
             $table->string('profile_picture');
@@ -23,17 +24,17 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('occupation');
             $table->enum('marital_status', ['single', 'married']);
+            $table->enum('relation', ['wife', 'child', 'husband']);
             $table->softDeletes();
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('head_of_families');
+        Schema::dropIfExists('family_members');
     }
 };
