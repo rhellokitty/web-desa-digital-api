@@ -41,7 +41,7 @@ class UserController extends Controller
 
     public function getAllPaginated(Request $request)
     {
-        $request = $request->validated([
+        $request = $request->validate([
             'search' => 'nullable|string',
             'row_per_page' => 'required|integer'
         ]);
