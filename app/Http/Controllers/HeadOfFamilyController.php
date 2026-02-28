@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
+use App\Http\Requests\HeadOfFamilyStoreRequest;
 use App\Http\Resources\HeadOfFamilyResource;
 use App\Http\Resources\PaginateResource;
 use App\Interfaces\HeadOfFamilyRepositoriesInterface;
@@ -48,6 +49,34 @@ class HeadOfFamilyController extends Controller
             return ResponseHelper::jsonResponse(true, 'Data Head Of Family Berhasil Diambil', PaginateResource::make($headOfFamilies, HeadOfFamilyResource::class), 200);
         } catch (Exception $e) {
             return ResponseHelper::jsonResponse(false, 'Data Head Of Family Gagal Diambil', null, 500);
+        }
+    }
+
+    public function show(string $id)
+    {
+        try {
+            $headOfFamily = $this->headOfFamilyRepositories->getById($id);
+
+            if (!$headOfFamily) {
+                return ResponseHelper::jsonResponse(false, 'Data Head Of Family Tidak Ditemukan', null, 404);
+            }
+
+            return ResponseHelper::jsonResponse(true, 'Data Head Of Family Berhasil Diambil', HeadOfFamilyResource::make($headOfFamily), 200);
+        } catch (Exception $e) {
+            return ResponseHelper::jsonResponse(false, 'Data Head Of Family Gagal Diambil', null, 500);
+        }
+    }
+
+    public function store(HeadOfFamilyStoreRequest $request)
+    {
+        $request = $request->validated();
+        try {
+
+            $headOfFamily = $this->headOfFamilyRepositories->create($request);
+
+            return ResponseHelper::jsonResponse(true, 'Data Head Of Family Berhasil Ditambahkan', HeadOfFamilyResource::make($headOfFamily), 200);
+        } catch (Exception $e) {
+            return ResponseHelper::jsonResponse(false, 'Data Head Of Family Gagal Ditambahkan', null, 500);
         }
     }
 }

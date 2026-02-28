@@ -10,7 +10,6 @@ use App\Http\Resources\UserResource;
 use App\Interfaces\UserRepositoriesInterface;
 use Exception;
 use Illuminate\Http\Request;
-use Pest\Mutate\Options\ExceptOption;
 
 class UserController extends Controller
 {
