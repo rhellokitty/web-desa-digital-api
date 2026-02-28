@@ -21,6 +21,15 @@ class HeadOfFamily extends Model
         'marital_status'
     ];
 
+    public function scopeSearch($query, $search)
+    {
+        return $query->whereHas('user', function ($query) use ($search) {
+            $query->where('name', 'Like', '%' . $search . '%')
+                ->orWhere('email', 'Like', '%' . $search . '%');
+        })->orWhere('phone_number', 'Like', '%' . $search . '%')
+            ->orWhere('identity_number', 'Like', '%' . $search . '%');;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
