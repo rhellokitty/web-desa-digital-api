@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\HeadOfFamily>
@@ -17,6 +18,7 @@ class HeadOfFamilyFactory extends Factory
     public function definition(): array
     {
         return [
+            'id' => Str::uuid(),
             'profile_picture' => $this->faker->imageUrl(),
             'identity_number' => $this->faker->unique(true)->numberBetween(100000000, 99999999),
             'gender' => $this->faker->randomElement(['male', 'female']),

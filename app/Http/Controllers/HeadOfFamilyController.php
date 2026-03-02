@@ -76,7 +76,21 @@ class HeadOfFamilyController extends Controller
 
             return ResponseHelper::jsonResponse(true, 'Data Head Of Family Berhasil Ditambahkan', HeadOfFamilyResource::make($headOfFamily), 200);
         } catch (Exception $e) {
-            return ResponseHelper::jsonResponse(false, 'Data Head Of Family Gagal Ditambahkan', null, 500);
+            return ResponseHelper::jsonResponse(false, 'Data Head Of Family Gagal Ditambahkan', [
+                'error' => $e->getMessage(),
+                'file'  => $e->getFile(),
+                'line'  => $e->getLine(),
+            ], 500);
+        }
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $request = $request->validated();
+        try {
+            //code...
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
 }
