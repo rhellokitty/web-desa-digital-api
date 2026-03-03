@@ -106,4 +106,25 @@ class HeadOfFamilyController extends Controller
             ], 500);
         }
     }
+
+    public function destroy(string $id)
+    {
+        try {
+            $headOfFamily = $this->headOfFamilyRepositories->getById($id);
+
+            if (!$headOfFamily) {
+                return ResponseHelper::jsonResponse(false, 'Data Head Of Family Tidak Ditemukan', null, 404);
+            }
+
+            $headOfFamily = $this->headOfFamilyRepositories->destroy($id);
+
+            return ResponseHelper::jsonResponse(true, 'Data Head Of Family Berhasil Dihapus', HeadOfFamilyResource::make($headOfFamily), 200);
+        } catch (Exception $e) {
+            return ResponseHelper::jsonResponse(false, 'Data Head Of Family Gagal Dihapus', [
+                'error' => $e->getMessage(),
+                'file'  => $e->getFile(),
+                'line'  => $e->getLine(),
+            ], 500);
+        }
+    }
 }

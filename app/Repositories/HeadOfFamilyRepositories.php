@@ -106,4 +106,20 @@ class HeadOfFamilyRepositories implements HeadOfFamilyRepositoriesInterface
             throw new Exception($e->getMessage());
         }
     }
+
+    public function destroy(string $id)
+    {
+        DB::beginTransaction();
+
+        try {
+            $headOfFamily = HeadOfFamily::find($id);
+            $headOfFamily->delete();
+
+            DB::commit();
+            return $headOfFamily;
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+    }
 }
