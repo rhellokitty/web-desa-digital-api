@@ -42,13 +42,28 @@ class FamilyMemberController extends Controller
         ]);
 
         try {
-            $headOfFamilies = $this->familyMemberRepositories->getAllPaginated(
+            $familyMember = $this->familyMemberRepositories->getAllPaginated(
                 $request['search'] ?? null,
                 $request['row_per_page'],
             );
-            return ResponseHelper::jsonResponse(true, 'Data Head Of Family Berhasil Diambil', PaginateResource::make($headOfFamilies, FamilyMemberResource::class), 200);
+            return ResponseHelper::jsonResponse(true, 'Data Family Member Berhasil Diambil', PaginateResource::make($familyMember, FamilyMemberResource::class), 200);
         } catch (Exception $e) {
-            return ResponseHelper::jsonResponse(false, 'Data Head Of Family Gagal Diambil', null, 500);
+            return ResponseHelper::jsonResponse(false, 'Data Family Member Gagal Diambil', null, 500);
+        }
+    }
+
+    public function show(string $id)
+    {
+        try {
+            $familyMember = $this->familyMemberRepositories->getById($id);
+
+            if (!$familyMember) {
+                return ResponseHelper::jsonResponse(false, 'Data Family Member Tidak Ditemukan', null, 404);
+            }
+
+            return ResponseHelper::jsonResponse(true, 'Data Family Member Berhasil Diambil', FamilyMemberResource::make($familyMember), 200);
+        } catch (Exception $e) {
+            return ResponseHelper::jsonResponse(false, 'Data Family Member Gagal Diambil', null, 500);
         }
     }
 }

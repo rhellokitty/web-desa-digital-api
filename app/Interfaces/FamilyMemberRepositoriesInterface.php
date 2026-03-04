@@ -14,4 +14,8 @@ interface FamilyMemberRepositoriesInterface
         ?string $search,
         ?int $rowPerPage
     );
+
+    public function getById(
+        string $id
+    );
 }

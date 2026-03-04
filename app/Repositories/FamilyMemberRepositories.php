@@ -15,8 +15,6 @@ class FamilyMemberRepositories implements FamilyMemberRepositoriesInterface
             }
         });
 
-        // $query = FamilyMember::query();
-
         if ($limit) {
             $query->limit($limit);
         }
@@ -31,5 +29,11 @@ class FamilyMemberRepositories implements FamilyMemberRepositoriesInterface
     {
         $query = $this->getAll($search, $rowPerPage, false);
         return $query->paginate($rowPerPage);
+    }
+
+    public function getById(string $id)
+    {
+        $query = FamilyMember::where('id', $id);
+        return $query->first();
     }
 }
