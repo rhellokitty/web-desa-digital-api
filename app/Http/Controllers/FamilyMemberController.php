@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
+use App\Http\Requests\FamilyMemberStoreRequest;
 use App\Http\Resources\FamilyMemberResource;
 use App\Http\Resources\PaginateResource;
 use App\Interfaces\FamilyMemberRepositoriesInterface;
@@ -64,6 +65,22 @@ class FamilyMemberController extends Controller
             return ResponseHelper::jsonResponse(true, 'Data Family Member Berhasil Diambil', FamilyMemberResource::make($familyMember), 200);
         } catch (Exception $e) {
             return ResponseHelper::jsonResponse(false, 'Data Family Member Gagal Diambil', null, 500);
+        }
+    }
+
+    public function store(FamilyMemberStoreRequest $request)
+    {
+        $request = $request->validated();
+        try {
+            $familyMember = $this->familyMemberRepositories->create($request);
+
+            return ResponseHelper::jsonResponse(true, 'Data Family Member Berhasil Ditambahkan', FamilyMemberResource::make($familyMember), 200);
+        } catch (Exception $e) {
+            return ResponseHelper::jsonResponse(false, 'Data Family Member Gagal Ditambahkan', [
+                'error' => $e->getMessage(),
+                'file'  => $e->getFile(),
+                'line'  => $e->getLine(),
+            ], 500);
         }
     }
 }

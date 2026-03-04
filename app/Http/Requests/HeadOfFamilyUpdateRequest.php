@@ -23,16 +23,16 @@ class HeadOfFamilyUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:users,email,' . HeadOfFamily::find($this->route('head_of_family'))->user_id,
+            'name' => 'sometimes|string',
+            'email' => 'sometimes|string|email|unique:users,email,' . HeadOfFamily::find($this->route('head_of_family'))->user_id,
             'password' => 'nullable|string|min:8',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
-            'identity_number' => 'required|integer',
-            'gender' => 'required|string|in:male,female',
-            'date_of_birth' => 'required|date',
-            'phone_number' => 'required|string',
-            'occupation' => 'required|string',
-            'marital_status' => 'required|string|in:single,married',
+            'identity_number' => 'sometimes|integer',
+            'gender' => 'sometimes|string|in:male,female',
+            'date_of_birth' => 'sometimes|date',
+            'phone_number' => 'sometimes|string',
+            'occupation' => 'sometimes|string',
+            'marital_status' => 'sometimes|string|in:single,married',
         ];
     }
 }

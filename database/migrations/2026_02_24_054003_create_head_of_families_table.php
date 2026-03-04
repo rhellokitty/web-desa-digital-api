@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignUuid('user_id')->constrained('users');
 
             $table->string('profile_picture');
-            $table->unsignedBigInteger('identity_number');
+            $table->bigInteger('identity_number');
             $table->enum('gender', ['male', 'female']);
             $table->date('date_of_birth');
             $table->string('phone_number');

@@ -17,13 +17,18 @@ return new class extends Migration
             $table->foreignUuid('head_of_family_id')->constrained('head_of_families');
             $table->foreignUuid('user_id')->constrained('users');
 
-            $table->string('profile_picture');
-            $table->integer('identity_number');
+            $table->string('profile_picture')->nullable();
+            $table->bigInteger('identity_number');
             $table->enum('gender', ['male', 'female']);
             $table->date('date_of_birth');
-            $table->string('phone_number');
-            $table->string('occupation');
-            $table->enum('marital_status', ['single', 'married']);
+            $table->string('phone_number')->nullable();
+            $table->string('occupation')->nullable();
+            $table->enum('marital_status', [
+                'single',
+                'married',
+                'divorced',
+                'widowed'
+            ]);
             $table->enum('relation', ['wife', 'child', 'husband']);
             $table->softDeletes();
             $table->timestamps();

@@ -95,7 +95,7 @@ class HeadOfFamilyRepositories implements HeadOfFamilyRepositoriesInterface
 
             $userRepository->update($headOfFamily->user_id, [
                 'name' => $data['name'],
-                'email' => $data['email'],
+                'email' => $data['email'] ?? $headOfFamily->user->email,
                 'password' => isset($data['password']) ? bcrypt($data['password']) : $headOfFamily->user->password
             ]);
 
