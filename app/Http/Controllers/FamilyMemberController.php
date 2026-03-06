@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
 use App\Http\Requests\FamilyMemberStoreRequest;
+use App\Http\Requests\FamilyMemberUpdateRequest;
 use App\Http\Resources\FamilyMemberResource;
 use App\Http\Resources\PaginateResource;
 use App\Interfaces\FamilyMemberRepositoriesInterface;
@@ -77,6 +78,52 @@ class FamilyMemberController extends Controller
             return ResponseHelper::jsonResponse(true, 'Data Family Member Berhasil Ditambahkan', FamilyMemberResource::make($familyMember), 200);
         } catch (Exception $e) {
             return ResponseHelper::jsonResponse(false, 'Data Family Member Gagal Ditambahkan', [
+                'error' => $e->getMessage(),
+                'file'  => $e->getFile(),
+                'line'  => $e->getLine(),
+            ], 500);
+        }
+    }
+
+    public function update(FamilyMemberUpdateRequest $request, string $id)
+    {
+        $request = $request->validated();
+
+        try {
+            $familyMember = $this->familyMemberRepositories->getById(
+                $id
+            );
+
+            if (!$familyMember) {
+                return ResponseHelper::jsonResponse(false, 'Data Family Member Tidak Ditemukan', null, 404);
+            }
+
+            $familyMember = $this->familyMemberRepositories->update($id, $request);
+
+            return ResponseHelper::jsonResponse(true, 'Data Family Member Berhasil Diupdate', FamilyMemberResource::make($familyMember), 200);
+        } catch (Exception $e) {
+            return ResponseHelper::jsonResponse(false, 'Data Family Member Gagal Diupdate', [
+                'error' => $e->getMessage(),
+                'file'  => $e->getFile(),
+                'line'  => $e->getLine(),
+            ], 500);
+        }
+    }
+
+    public function destroy(string $id)
+    {
+        try {
+            $familyMember = $this->familyMemberRepositories->getById($id);
+
+            if (!$familyMember) {
+                return ResponseHelper::jsonResponse(false, 'Data Family Member Tidak Ditemukan', null, 404);
+            }
+
+            $familyMember = $this->familyMemberRepositories->delete($id);
+
+            return ResponseHelper::jsonResponse(true, 'Data Family Member Berhasil Dihapus', FamilyMemberResource::make($familyMember), 200);
+        } catch (Exception $e) {
+            return ResponseHelper::jsonResponse(false, 'Data Family Member Gagal Dihapus', [
                 'error' => $e->getMessage(),
                 'file'  => $e->getFile(),
                 'line'  => $e->getLine(),
