@@ -39,6 +39,12 @@ class SocialAssistanceRepositories implements SocialAssistanceRepositoriesInterf
         return $query->paginate($rowPerPage);
     }
 
+    public function getById(string $id)
+    {
+        $query = SocialAssistance::where('id', $id);
+        return $query->first();
+    }
+
     public function create(array $data)
     {
         DB::beginTransaction();
@@ -55,6 +61,48 @@ class SocialAssistanceRepositories implements SocialAssistanceRepositoriesInterf
 
             DB::commit();
 
+            return $socialAssistance;
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function update(string $id, array $data)
+    {
+
+        DB::beginTransaction();
+
+        try {
+            $socialAssistance = SocialAssistance::find($id);
+
+            if (isset($data['thumbnail'])) {
+                $socialAssistance->thumbnail = $data['thumbnail']->store('assets/social-assistances', 'public');
+            }
+
+            $socialAssistance->name = $data['name'];
+            $socialAssistance->category = $data['category'];
+            $socialAssistance->amount = $data['amount'];
+            $socialAssistance->provider = $data['provider'];
+            $socialAssistance->description = $data['description'];
+            $socialAssistance->is_available = $data['is_available'];
+            $socialAssistance->save();
+
+            DB::commit();
+            return $socialAssistance;
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function delete(string $id)
+    {
+        DB::beginTransaction();
+        try {
+            $socialAssistance = SocialAssistance::find($id);
+            $socialAssistance->delete();
+            DB::commit();
             return $socialAssistance;
         } catch (Exception $e) {
             DB::rollBack();
