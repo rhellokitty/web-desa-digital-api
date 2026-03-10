@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Interfaces\SocialAssistanceRecipientRepositoriesInterface;
 use App\Models\SocialAssistanceRecipient;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class SocialAssistanceRecipientRepositories implements SocialAssistanceRecipientRepositoriesInterface
 {
@@ -36,5 +38,38 @@ class SocialAssistanceRecipientRepositories implements SocialAssistanceRecipient
     ) {
         $query = $this->getAll($search, $rowPerPage, false);
         return $query->paginate($rowPerPage);
+    }
+
+    public function create(array $data)
+    {
+        DB::beginTransaction();
+
+        try {
+            $socialAssistanceRecipients = new SocialAssistanceRecipient();
+            $socialAssistanceRecipients->social_assistance_id = $data['social_assistance_id'];
+            $socialAssistanceRecipients->head_of_family_id = $data['head_of_family_id'];
+            $socialAssistanceRecipients->amount = $data['amount'];
+            $socialAssistanceRecipients->reason = $data['reason'];
+            $socialAssistanceRecipients->bank = $data['bank'];
+            $socialAssistanceRecipients->account_number = $data['account_number'];
+
+            if (isset($data['proof'])) {
+                $socialAssistanceRecipients->proof =
+                    $data['proof']->store('assets/social-assistance-recipients', 'public');
+            }
+
+            if (isset($data['status'])) {
+                $socialAssistanceRecipients->status =
+                    $data['status'];
+            }
+
+            $socialAssistanceRecipients->save();
+
+            DB::commit();
+            return $socialAssistanceRecipients;
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
     }
 }
