@@ -32,4 +32,18 @@ class SocialAssistanceRecipientStoreRequest extends FormRequest
             'status' => 'nullable|string|in:pending,approved,rejected'
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'social_assistance_id' => 'Bantuan Sosial',
+            'head_of_family_id' => 'Kepala Keluarga',
+            'amount' => 'Jumlah Bantuan',
+            'reason' => 'Alasan',
+            'bank' => 'Bank',
+            'account_number' => 'Nomor Rekening',
+            'proof' => 'Bukti Transfer',
+            'status' => 'Status',
+        ];
+    }
 }

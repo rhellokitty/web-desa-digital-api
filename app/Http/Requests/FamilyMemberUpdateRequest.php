@@ -26,7 +26,6 @@ class FamilyMemberUpdateRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'nullable|string|email|unique:users,email,' . FamilyMember::find($this->route('family_member'))->user_id,
             'password' => 'nullable|string|min:8',
-            // 'head_of_family_id' => 'required|exists:head_of_families,id',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
             'identity_number' => 'required|integer',
             'gender' => 'required|string|in:male,female',

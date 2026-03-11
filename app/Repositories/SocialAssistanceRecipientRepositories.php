@@ -21,6 +21,8 @@ class SocialAssistanceRecipientRepositories implements SocialAssistanceRecipient
             }
         );
 
+        $query->orderBy('created_at', 'desc');
+
         if ($limit) {
             $query->limit($limit);
         }
@@ -38,6 +40,12 @@ class SocialAssistanceRecipientRepositories implements SocialAssistanceRecipient
     ) {
         $query = $this->getAll($search, $rowPerPage, false);
         return $query->paginate($rowPerPage);
+    }
+
+    public function getById(string $id)
+    {
+        $query = SocialAssistanceRecipient::where('id', $id);
+        return $query->first();
     }
 
     public function create(array $data)
@@ -65,6 +73,36 @@ class SocialAssistanceRecipientRepositories implements SocialAssistanceRecipient
 
             $socialAssistanceRecipients->save();
 
+            DB::commit();
+            return $socialAssistanceRecipients;
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function update(string $id, array $data)
+    {
+        DB::beginTransaction();
+        try {
+            $socialAssistanceRecipients = SocialAssistanceRecipient::find($id);
+
+            $socialAssistanceRecipients->amount = $data['amount'];
+            $socialAssistanceRecipients->reason = $data['reason'];
+            $socialAssistanceRecipients->bank = $data['bank'];
+            $socialAssistanceRecipients->account_number = $data['account_number'];
+
+            if (isset($data['proof'])) {
+                $socialAssistanceRecipients->proof =
+                    $data['proof']->store('assets/social-assistance-recipients', 'public');
+            }
+
+            if (isset($data['status'])) {
+                $socialAssistanceRecipients->status =
+                    $data['status'];
+            }
+
+            $socialAssistanceRecipients->save();
             DB::commit();
             return $socialAssistanceRecipients;
         } catch (Exception $e) {

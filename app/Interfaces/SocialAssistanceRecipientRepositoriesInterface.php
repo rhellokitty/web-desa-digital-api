@@ -10,6 +10,10 @@ interface SocialAssistanceRecipientRepositoriesInterface
         bool $execute
     );
 
+    public function getById(
+        string $id
+    );
+
     public function getAllPaginated(
         ?string $search,
         ?int $rowPerPage
@@ -17,5 +21,14 @@ interface SocialAssistanceRecipientRepositoriesInterface
 
     public function create(
         array $data
+    );
+
+    public function update(
+        string $id,
+        array $data
+    );
+
+    public function delete(
+        string $id
     );
 }

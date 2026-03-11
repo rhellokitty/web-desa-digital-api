@@ -96,7 +96,7 @@ class FamilyMemberRepositories implements FamilyMemberRepositoriesInterface
 
             $userRepository->update($familyMember->user_id, [
                 'name' => $data['name'],
-                'email' => $data['email'] ?? $familyMember->user->email,
+                'email' => $data['email'],
                 'password' => isset($data['password']) ? bcrypt($data['password']) : $familyMember->user->password
             ]);
 
