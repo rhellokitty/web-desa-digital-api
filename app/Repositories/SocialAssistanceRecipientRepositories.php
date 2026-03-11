@@ -110,4 +110,20 @@ class SocialAssistanceRecipientRepositories implements SocialAssistanceRecipient
             throw new Exception($e->getMessage());
         }
     }
+
+    public function delete(string $id)
+    {
+        DB::beginTransaction();
+
+        try {
+            $socialAssistanceRecipients = SocialAssistanceRecipient::find($id);
+            $socialAssistanceRecipients->delete();
+
+            DB::commit();
+            return $socialAssistanceRecipients;
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+    }
 }
