@@ -17,8 +17,8 @@ class EventFactory extends Factory
     public function definition(): array
     {
         return [
-            'thumbnail' => $this->faker->imageUrl(),,
-            'name' => $this->faker->randomElement(['Belajar Coding', 'Belajar Komputer', 'Belajar Manajemen Bisnis']) . '' . $this->faker->city(),
+            'thumbnail' => $this->faker->imageUrl(),
+            'name' => $this->faker->randomElement(['Belajar Coding', 'Belajar Komputer', 'Belajar Manajemen Bisnis']) . ' ' . $this->faker->city(),
             'description' => $this->faker->sentence(),
             'price' => $this->faker->numberBetween(100000, 1000000),
             'date' => $this->faker->date(),
