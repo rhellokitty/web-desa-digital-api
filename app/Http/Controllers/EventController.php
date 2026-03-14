@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
 use App\Http\Requests\EventStoreRequest;
+use App\Http\Requests\EventUpdateRequest;
 use App\Http\Resources\EventResource;
 use App\Http\Resources\PaginateResource;
 use App\Interfaces\EventRepositoriesInterface;
@@ -114,6 +115,73 @@ class EventController extends Controller
             return ResponseHelper::jsonResponse(
                 false,
                 'Data Event Gagal Ditambahkan',
+                [
+                    'error' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                ],
+                500
+            );
+        }
+    }
+
+    public function update(EventUpdateRequest $request, string $id)
+    {
+        $request = $request->validated();
+        try {
+            $events = $this->eventRepositories->getById($id);
+
+            if (!$events) {
+                return ResponseHelper::jsonResponse(
+                    false,
+                    'Data Event Tidak Ditemukan',
+                    null,
+                    404
+                );
+            }
+
+            $events = $this->eventRepositories->update($id, $request);
+
+            return ResponseHelper::jsonResponse(
+                true,
+                'Data Event Berhasil Diupdate',
+                EventResource::make($events),
+                200
+            );
+        } catch (Exception $e) {
+            return ResponseHelper::jsonResponse(
+                false,
+                'Data Event Gagal Diupdate',
+                [
+                    'error' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                ],
+                500
+            );
+        }
+    }
+
+    public function destroy(string $id)
+    {
+        try {
+            $events = $this->eventRepositories->getById($id);
+
+            if (!$events) {
+                return ResponseHelper::jsonResponse(
+                    false,
+                    'Data Event Tidak Ditemukan',
+                    null,
+                    404
+                );
+            }
+
+            $events = $this->eventRepositories->delete($id);
+            return ResponseHelper::jsonResponse(true, 'Data Event Berhasil Dihapus', EventResource::make($events), 200);
+        } catch (Exception $e) {
+            return ResponseHelper::jsonResponse(
+                false,
+                'Data Event Gagal Dihapus',
                 [
                     'error' => $e->getMessage(),
                     'file' => $e->getFile(),
