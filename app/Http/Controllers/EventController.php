@@ -54,7 +54,7 @@ class EventController extends Controller
         ]);
 
         try {
-            $evetns = $this->eventRepositories->getAllPaginated(
+            $events = $this->eventRepositories->getAllPaginated(
                 $request['search'] ?? null,
                 $request['row_per_page'],
             );
@@ -62,7 +62,7 @@ class EventController extends Controller
             return ResponseHelper::jsonResponse(
                 true,
                 'Data Event Berhasil Diambil',
-                PaginateResource::make($evetns, EventResource::class),
+                PaginateResource::make($events, EventResource::class),
                 200
             );
         } catch (Exception $e) {
