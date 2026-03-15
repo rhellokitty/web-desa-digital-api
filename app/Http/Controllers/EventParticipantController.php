@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
 use App\Http\Requests\EventParticipantStoreRequest;
+use App\Http\Requests\EventParticipantUpdateRequest;
 use App\Http\Resources\EventParticipantResource;
 use App\Http\Resources\PaginateResource;
 use App\Interfaces\EventParticipantRepositoriesInterface;
@@ -90,6 +91,38 @@ class EventParticipantController extends Controller
             return ResponseHelper::jsonResponse(
                 false,
                 'Data Event Participant Gagal Ditambahkan',
+                [
+                    'error' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                ],
+                500
+            );
+        }
+    }
+
+    public function update(EventParticipantUpdateRequest $request, string $id)
+    {
+        $request = $request->validated();
+
+        try {
+            $eventParticipants = $this->eventParticipantRepositories->getById($id);
+
+            if (!$eventParticipants) {
+                return ResponseHelper::jsonResponse(
+                    false,
+                    'Data Event Participant Tidak Ditemukan',
+                    null,
+                    404
+                );
+            }
+
+            $eventParticipants = $this->eventParticipantRepositories->update($id, $request);
+            return ResponseHelper::jsonResponse(true, 'Data Event Participant Berhasil Diupdate', EventParticipantResource::make($eventParticipants), 200);
+        } catch (Exception $e) {
+            return ResponseHelper::jsonResponse(
+                false,
+                'Data Event Participant Gagal Diupdate',
                 [
                     'error' => $e->getMessage(),
                     'file' => $e->getFile(),

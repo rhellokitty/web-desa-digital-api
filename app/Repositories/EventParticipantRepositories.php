@@ -66,4 +66,31 @@ class EventParticipantRepositories implements EventParticipantRepositoriesInterf
             throw new Exception($e->getMessage());
         }
     }
+
+    public function update(string $id, array $data)
+    {
+        DB::beginTransaction();
+        try {
+            $event = Event::where('id', $data['event_id'])->first();
+
+            $eventParticipant = EventParticipant::find($id);
+            $eventParticipant->event_id = $data['event_id'];
+            $eventParticipant->head_of_family_id = $data['head_of_family_id'];
+
+            if (isset($data['quantity'])) {
+                $eventParticipant->quantity = $data['quantity'];
+            } else {
+                $data['quantity'] = $eventParticipant->quantity;
+            }
+
+            $eventParticipant->total_price = $event->price * $data['quantity'];
+            $eventParticipant->payment_status = $data['payment_status'];
+            $eventParticipant->save();
+            DB::commit();
+            return $eventParticipant;
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+    }
 }
