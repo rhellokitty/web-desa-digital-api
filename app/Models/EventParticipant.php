@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Traits\UUID;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EventParticipant extends Model
 {
-    use SoftDeletes, UUID;
+    use SoftDeletes, UUID, HasFactory;
 
     protected $fillable = [
         'event_id',
@@ -18,9 +19,14 @@ class EventParticipant extends Model
         'payment_status',
     ];
 
+    protected $casts = [
+        'quantity' => 'integer',
+        'total_price' => 'decimal:2'
+    ];
+
     public function event()
     {
-        return $this->belongtTo(Event::class);
+        return $this->belongsTo(Event::class);
     }
 
     public function headOfFamily()
