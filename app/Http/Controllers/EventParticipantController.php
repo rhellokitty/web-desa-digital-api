@@ -132,4 +132,40 @@ class EventParticipantController extends Controller
             );
         }
     }
+
+
+    public function destroy(string $id)
+    {
+        try {
+            $eventParticipants = $this->eventParticipantRepositories->getById($id);
+
+            if (!$eventParticipants) {
+                return ResponseHelper::jsonResponse(
+                    false,
+                    'Data Event Participant Tidak Ditemukan',
+                    null,
+                    404
+                );
+            }
+
+            $eventParticipants = $this->eventParticipantRepositories->delete($id);
+            return ResponseHelper::jsonResponse(
+                true,
+                'Data Event Participant Berhasil Dihapus',
+                EventParticipantResource::make($eventParticipants),
+                200
+            );
+        } catch (Exception $e) {
+            return ResponseHelper::jsonResponse(
+                false,
+                'Data Event Participant Gagal Dihapus',
+                [
+                    'error' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                ],
+                500
+            );
+        }
+    }
 }

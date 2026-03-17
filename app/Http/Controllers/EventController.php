@@ -10,7 +10,6 @@ use App\Http\Resources\PaginateResource;
 use App\Interfaces\EventRepositoriesInterface;
 use Exception;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class EventController extends Controller
 {
