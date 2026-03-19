@@ -65,8 +65,9 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
+        $request = $request->validated();
+        
         try {
-            $request = $request->validated();
 
             $user = $this->userRepositories->create($request);
 

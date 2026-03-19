@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('person_in_charge');
             $table->date('start_date');
             $table->date('end_date');
-            $table->decimal('amount',  10, 2);
+            $table->bigInteger('amount');
             $table->enum('status', ['ongoing', 'completed']);
 
             $table->softDeletes();

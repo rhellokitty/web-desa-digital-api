@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace App\Providers; 
 
 use App\Interfaces\DevelopmentRepositoriesInterface;
 use App\Interfaces\EventParticipantRepositoriesInterface;

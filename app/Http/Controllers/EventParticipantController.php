@@ -10,8 +10,6 @@ use App\Http\Resources\PaginateResource;
 use App\Interfaces\EventParticipantRepositoriesInterface;
 use Exception;
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\TryCatch;
-use Symfony\Component\HttpFoundation\Response;
 
 class EventParticipantController extends Controller
 {
