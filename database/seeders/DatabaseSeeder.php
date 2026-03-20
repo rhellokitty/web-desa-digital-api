@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             EventSeeder::class,
             EventParticipantSeeder::class,
             DevelopmentSeeder::class,
+            DevelopmentApplicantSeeder::class
         ]);
     }
 }
