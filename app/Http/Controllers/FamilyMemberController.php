@@ -10,14 +10,27 @@ use App\Http\Resources\PaginateResource;
 use App\Interfaces\FamilyMemberRepositoriesInterface;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
-class FamilyMemberController extends Controller
+class FamilyMemberController extends Controller implements HasMiddleware
 {
     private FamilyMemberRepositoriesInterface $familyMemberRepositories;
 
     public function __construct(FamilyMemberRepositoriesInterface $familyMemberRepositories)
     {
         $this->familyMemberRepositories = $familyMemberRepositories;
+    }
+
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using(['family-member-list|family-member-create|family-member-edit|family-member-delete']), only: ['index', 'getAllPaginated', 'show']),
+            new Middleware(PermissionMiddleware::using(['family-member-create']), only: ['store']),
+            new Middleware(PermissionMiddleware::using(['family-member-edit']), only: ['update']),
+            new Middleware(PermissionMiddleware::using(['family-member-delete']), only: ['destroy']),
+        ];
     }
 
     public function index(Request $request)

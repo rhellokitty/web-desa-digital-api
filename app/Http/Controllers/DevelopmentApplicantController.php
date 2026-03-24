@@ -11,17 +11,30 @@ use App\Interfaces\DevelopmentApplicantRepositoriesInterface;
 use App\Models\Development;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 use Symfony\Component\HttpFoundation\RateLimiter\RequestRateLimiterInterface;
 
 // use Symfony\Component\HttpFoundation\Request;
 
-class DevelopmentApplicantController extends Controller
+class DevelopmentApplicantController extends Controller implements HasMiddleware
 {
     private DevelopmentApplicantRepositoriesInterface $developmentApplicantRepositories;
 
     public function __construct(DevelopmentApplicantRepositoriesInterface $developmentApplicantRepositories)
     {
         $this->developmentApplicantRepositories = $developmentApplicantRepositories;
+    }
+
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using(['development-applicant-list|development-applicant-create|development-applicant-edit|development-applicant-delete']), only: ['index', 'getAllPaginated', 'show']),
+            new Middleware(PermissionMiddleware::using(['development-applicant-create']), only: ['store']),
+            new Middleware(PermissionMiddleware::using(['development-applicant-edit']), only: ['update']),
+            new Middleware(PermissionMiddleware::using(['development-applicant-delete']), only: ['destroy']),
+        ];
     }
 
     public function getAllPaginated(Request $request)
