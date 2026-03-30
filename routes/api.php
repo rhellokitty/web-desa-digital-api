@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DevelopmentApplicantController;
 use App\Http\Controllers\DevelopmentController;
 use App\Http\Controllers\EventController;
@@ -14,7 +15,10 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
+
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('dashboard/get-dashboard-data', [DashboardController::class, 'getDashboardData']);
+
     Route::apiResource('user', UserController::class);
     Route::get('user/all/paginated', [UserController::class, 'getAllPaginated']);
 
@@ -48,7 +52,4 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::middleware('auth:sanctum')->post('logout', [AuthController::class, 'logout'])->name('logout');
-Route::middleware('auth:sanctum')->post('me', [AuthController::class, 'me'])->name('me');
-
-
-// LANJUTKAN PADA MENIT 12:17
+Route::middleware('auth:sanctum')->get('me', [AuthController::class, 'me'])->name('me');

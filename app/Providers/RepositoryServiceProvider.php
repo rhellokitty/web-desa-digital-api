@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Interfaces\AuthRepositoriesInterface;
+use App\Interfaces\DashboardRepositoriesInterface;
 use App\Interfaces\DevelopmentApplicantRepositoriesInterface;
 use App\Interfaces\DevelopmentRepositoriesInterface;
 use App\Interfaces\EventParticipantRepositoriesInterface;
@@ -14,6 +15,7 @@ use App\Interfaces\SocialAssistanceRecipientRepositoriesInterface;
 use App\Interfaces\SocialAssistanceRepositoriesInterface;
 use App\Interfaces\UserRepositoriesInterface;
 use App\Repositories\AuthRepositories;
+use App\Repositories\DashboardRepositories;
 use App\Repositories\DevelopmentApplicantRepositories;
 use App\Repositories\DevelopmentRepositories;
 use App\Repositories\EventParticipantRepositories;
@@ -44,6 +46,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(DevelopmentApplicantRepositoriesInterface::class, DevelopmentApplicantRepositories::class);
         $this->app->bind(ProfileRepositoriesInterface::class, ProfileRepositories::class);
         $this->app->bind(AuthRepositoriesInterface::class, AuthRepositories::class);
+        $this->app->bind(DashboardRepositoriesInterface::class, DashboardRepositories::class);
     }
     /**
      * Bootstrap services.

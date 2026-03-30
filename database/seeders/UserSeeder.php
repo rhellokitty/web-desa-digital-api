@@ -20,6 +20,12 @@ class UserSeeder extends Seeder
             'password' => bcrypt('password'),
         ])->assignRole(Role::findByName('admin', 'sanctum'));
 
+        User::create([
+            'name' => 'Kepala Keluarga',
+            'email' => 'headFamily@gmail.com',
+            'password' => bcrypt('password'),
+        ])->assignRole('head-of-family');
+
         UserFactory::new()->count(15)->create();
     }
 }
