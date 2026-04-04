@@ -19,7 +19,7 @@ class SocialAssistanceRepositories implements SocialAssistanceRepositoriesInterf
             if ($search) {
                 $query->search($search);
             }
-        });
+        })->with('socialAssistanceRecipients');
 
         if ($limit) {
             $query->limit($limit);
@@ -41,7 +41,7 @@ class SocialAssistanceRepositories implements SocialAssistanceRepositoriesInterf
 
     public function getById(string $id)
     {
-        $query = SocialAssistance::where('id', $id);
+        $query = SocialAssistance::where('id', $id)->with('socialAssistanceRecipients');
         return $query->first();
     }
 

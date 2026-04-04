@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('thumbnail');
             $table->string('name');
             $table->enum('category', ['staple', 'cash', 'subsidied fuel', 'health']);
-            $table->decimal('amount', 10, 2);
+            $table->decimal('amount', 12, 2);
             $table->string('provider');
             $table->longText('description');
             $table->boolean('is_available')->default(true);

@@ -29,7 +29,6 @@ class HeadOfFamily extends Model
         })->orWhere('phone_number', 'Like', '%' . $search . '%')
             ->orWhere('identity_number', 'Like', '%' . $search . '%');;
     }
-
     public function user()
     {
         return $this->belongsTo(User::class);

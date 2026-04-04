@@ -15,7 +15,7 @@ class HeadOfFamilyRepositories implements HeadOfFamilyRepositoriesInterface
             if ($search) {
                 $query->search($search);
             }
-        });
+        })->latest();
 
         if ($limit) {
             $query->limit($limit);
@@ -52,7 +52,6 @@ class HeadOfFamilyRepositories implements HeadOfFamilyRepositoriesInterface
                 'email' => $data['email'],
                 'password' => $data['password']
             ]);
-
 
             $headOfFamily = new HeadOfFamily();
             $headOfFamily->user_id = $user->id;
