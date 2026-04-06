@@ -19,7 +19,7 @@ class SocialAssistanceRepositories implements SocialAssistanceRepositoriesInterf
             if ($search) {
                 $query->search($search);
             }
-        })->with('socialAssistanceRecipients');
+        })->latest()->with('socialAssistanceRecipients');
 
         if ($limit) {
             $query->limit($limit);

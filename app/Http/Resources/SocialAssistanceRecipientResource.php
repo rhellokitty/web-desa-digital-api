@@ -16,8 +16,8 @@ class SocialAssistanceRecipientResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'social_assistance_id' => new SocialAssistanceResource($this->socialAssistance),
-            'head_of_family_id' => new HeadOfFamilyResource($this->headOfFamily),
+            'social_assistance' => new SocialAssistanceResource($this->socialAssistance),
+            'head_of_family' => new HeadOfFamilyResource($this->headOfFamily),
             'amount' => $this->amount,
             'reason' => $this->reason,
             'bank' => $this->bank,
