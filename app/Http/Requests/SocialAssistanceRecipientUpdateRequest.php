@@ -22,11 +22,14 @@ class SocialAssistanceRecipientUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'social_assistance_id' => 'required|exists:social_assistances,id',
+            'head_of_family_id' => 'required|exists:head_of_families,id',
             'amount' => 'required|numeric|min:0',
             'reason' => 'required|string',
             'bank' => 'required|in:bri,bni,bca,mandiri',
             'account_number' => 'required|string',
             'proof' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'status' => 'nullable|string|in:pending,approved,rejected'
         ];
     }
 }

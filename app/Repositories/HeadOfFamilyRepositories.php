@@ -6,16 +6,25 @@ use App\Interfaces\HeadOfFamilyRepositoriesInterface;
 use App\Models\HeadOfFamily;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class HeadOfFamilyRepositories implements HeadOfFamilyRepositoriesInterface
 {
+
+    private function deleteFile(?string $path): void
+    {
+        if ($path && Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+    }
+
     public function getAll(?string $search, ?int $limit, bool $execute)
     {
         $query = HeadOfFamily::where(function ($query) use ($search) {
             if ($search) {
                 $query->search($search);
             }
-        })->latest();
+        })->latest()->with('familyMembers');
 
         if ($limit) {
             $query->limit($limit);
@@ -79,6 +88,7 @@ class HeadOfFamilyRepositories implements HeadOfFamilyRepositoriesInterface
             $headOfFamily = HeadOfFamily::find($id);
 
             if (isset($data['profile_picture'])) {
+                $this->deleteFile($headOfFamily->profile_picture); // ← hapus foto lama
                 $headOfFamily->profile_picture = $data['profile_picture']->store('assets/head-of-families', 'public');
             }
 
@@ -112,6 +122,7 @@ class HeadOfFamilyRepositories implements HeadOfFamilyRepositoriesInterface
 
         try {
             $headOfFamily = HeadOfFamily::find($id);
+            $this->deleteFile($headOfFamily->profile_picture);
             $headOfFamily->delete();
 
             DB::commit();

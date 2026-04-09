@@ -15,7 +15,7 @@ class FamilyMemberRepositories implements FamilyMemberRepositoriesInterface
             if ($search) {
                 $query->search($search);
             }
-        });
+        })->with('headOfFamily');
 
         if ($limit) {
             $query->limit($limit);

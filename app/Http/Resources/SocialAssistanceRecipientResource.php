@@ -22,7 +22,7 @@ class SocialAssistanceRecipientResource extends JsonResource
             'reason' => $this->reason,
             'bank' => $this->bank,
             'account_number' => $this->account_number,
-            'proof' => $this->proof,
+            'proof' => asset('storage/' . $this->proof),
             'status' => $this->status,
             'created_at' => $this->created_at,
         ];

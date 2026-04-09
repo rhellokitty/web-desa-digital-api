@@ -15,7 +15,7 @@ class DevelopmentApplicantRepositories implements DevelopmentApplicantRepositori
             if ($search) {
                 $query->search($search);
             }
-        });
+        })->with('development', 'user');
 
         if ($limit) {
             $query->limit($limit);

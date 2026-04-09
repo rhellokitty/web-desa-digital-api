@@ -16,7 +16,7 @@ class DevelopmentRepositories implements DevelopmentRepositoriesInterface
             if ($search) {
                 $query->search($search);
             }
-        });
+        })->with('developmentApplicants');
 
         if ($limit) {
             $query->limit($limit);

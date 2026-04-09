@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class SocialAssistanceRepositories implements SocialAssistanceRepositoriesInterface
 {
-
     public function getAll(
         ?string $search,
         ?int $limit,
