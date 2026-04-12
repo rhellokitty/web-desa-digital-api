@@ -16,8 +16,8 @@ class DevelopmentApplicantResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'development_id' => new DevelopmentResource($this->whenLoaded('development')),
-            'user_id' => new UserResource($this->whenLoaded('user')),
+            'development' => new DevelopmentResource($this->whenLoaded('development')),
+            'user' => new UserResource($this->whenLoaded('user')),
             'status' => $this->status,
         ];
     }

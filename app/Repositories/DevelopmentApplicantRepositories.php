@@ -15,7 +15,7 @@ class DevelopmentApplicantRepositories implements DevelopmentApplicantRepositori
             if ($search) {
                 $query->search($search);
             }
-        })->with('development', 'user');
+        })->latest()->with('development', 'user');
 
         if ($limit) {
             $query->limit($limit);
@@ -38,7 +38,7 @@ class DevelopmentApplicantRepositories implements DevelopmentApplicantRepositori
 
     public function getById(string $id)
     {
-        $query = DevelopmentApplicant::where('id', $id);
+        $query = DevelopmentApplicant::where('id', $id)->with('development', 'user');
         return $query->first();
     }
 

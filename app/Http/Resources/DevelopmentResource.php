@@ -27,4 +27,4 @@ class DevelopmentResource extends JsonResource
             'development_applicants' => DevelopmentApplicantResource::collection($this->whenLoaded('developmentApplicants')),
         ];
     }
-}
+} 
