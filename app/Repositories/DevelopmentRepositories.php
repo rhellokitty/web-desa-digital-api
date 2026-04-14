@@ -16,7 +16,7 @@ class DevelopmentRepositories implements DevelopmentRepositoriesInterface
             if ($search) {
                 $query->search($search);
             }
-        })->latest()->with('developmentApplicants');
+        })->latest()->with('developmentApplicants.user');
 
         if ($limit) {
             $query->limit($limit);
@@ -39,7 +39,7 @@ class DevelopmentRepositories implements DevelopmentRepositoriesInterface
 
     public function getById(string $id)
     {
-        $query = Development::where('id', $id)->with('developmentApplicants');
+        $query = Development::where('id', $id)->with('developmentApplicants.user');
         return $query->first();
     }
 
