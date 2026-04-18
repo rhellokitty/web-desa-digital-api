@@ -18,7 +18,7 @@ class EventRepositories implements EventRepositoriesInterface
             if ($search) {
                 $query->search($search);
             }
-        });
+        })->latest()->with('eventParticipants');
 
         if ($limit) {
             $query->limit($limit);
@@ -40,7 +40,7 @@ class EventRepositories implements EventRepositoriesInterface
 
     public function getById(string $id)
     {
-        $query = Event::where('id', $id);
+        $query = Event::where('id', $id)->with('eventParticipants');
         return $query->first();
     }
 

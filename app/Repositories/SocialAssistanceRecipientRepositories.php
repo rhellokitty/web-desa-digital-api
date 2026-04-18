@@ -19,7 +19,7 @@ class SocialAssistanceRecipientRepositories implements SocialAssistanceRecipient
                     $query->search($search);
                 }
             }
-        );
+        )->with('socialAssistance', 'headOfFamily');
 
         $query->orderBy('created_at', 'desc');
 
@@ -44,7 +44,7 @@ class SocialAssistanceRecipientRepositories implements SocialAssistanceRecipient
 
     public function getById(string $id)
     {
-        $query = SocialAssistanceRecipient::where('id', $id);
+        $query = SocialAssistanceRecipient::where('id', $id)->with('socialAssistance', 'headOfFamily');
         return $query->first();
     }
 

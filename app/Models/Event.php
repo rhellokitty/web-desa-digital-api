@@ -21,7 +21,7 @@ class Event extends Model
     ];
 
     protected $casts = [
-        'price' => 'decimal:2'
+        'price' => 'decimal:2',
     ];
 
     public function scopeSearch($query, $search)

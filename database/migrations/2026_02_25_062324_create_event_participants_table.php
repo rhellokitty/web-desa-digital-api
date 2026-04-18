@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('event_participants', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('event_id')->constrained('events');
-            $table->foreignUuid('head_of_family_id')->constrained('head_of_families');
+            $table->foreignUuid('head_of_family_id')->constrained('head_of_families')->cascadeOnDelete();
             $table->integer('quantity');
             $table->decimal('total_price', 10, 2);
             $table->string('payment_status');
