@@ -8,7 +8,6 @@ use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Resources\ProfileResource;
 use App\Interfaces\ProfileRepositoriesInterface;
 use Exception;
-use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
@@ -25,7 +24,7 @@ class ProfileController extends Controller
             $profile = $this->profileRepositories->getProfile();
 
             if (!$profile) {
-                return ResponseHelper::jsonResponse(false, 'Data Profile Tidak Ditemukan', null, 404);
+                return ResponseHelper::jsonResponse(false, 'Data Profile Tidak Ditemukan', null, 200);
             } else {
                 return ResponseHelper::jsonResponse(true, 'Data Profile Berhasil Diambil', ProfileResource::make($profile), 200);
             }
