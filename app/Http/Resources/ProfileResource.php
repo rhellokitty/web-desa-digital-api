@@ -16,14 +16,15 @@ class ProfileResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'thumbnail' => $this->thumbnail,
+            'thumbnail' => asset('storage/' . $this->thumbnail),
             'name' => $this->name,
             'about' => $this->about,
             'headman' => $this->headman,
             'people' => $this->people,
             'agriculutral_area' => (float)(string) $this->agriculutral_area,
             'total_area' => (float)(string) $this->total_area,
-            'profile_images' => ProfileImageResource::collection($this->profileImages)
+            'profile_images' => ProfileImageResource::collection($this->whenLoaded('profileImages')),
+            'created_at' => $this->created_at,
         ];
     }
 }

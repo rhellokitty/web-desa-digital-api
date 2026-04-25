@@ -40,7 +40,7 @@ class ProfileRepositories implements ProfileRepositoriesInterface
 
             DB::commit();
 
-            return $profile;
+            return Profile::with('profileImages')->find($profile->id);
         } catch (Exception $e) {
             DB::rollBack();
             throw new Exception($e->getMessage());
@@ -77,7 +77,7 @@ class ProfileRepositories implements ProfileRepositoriesInterface
             $profile->save();
             DB::commit();
 
-            return $profile;
+            return $profile->load('profileImages');
         } catch (Exception $e) {
             DB::rollBack();
             throw new Exception($e->getMessage());

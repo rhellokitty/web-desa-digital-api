@@ -21,8 +21,8 @@ class Profile extends Model
     ];
 
     protected  $casts = [
-        'agriculutral_area' => 'decimal:2',
-        'total_area' => 'decimal:2',
+        'agriculutral_area' => 'float',
+        'total_area' => 'float',
     ];
 
     public function profileImages()

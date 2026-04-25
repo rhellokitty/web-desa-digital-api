@@ -33,8 +33,6 @@ class ProfileController extends Controller
         }
     }
 
-    // LANJUTKAN TESTING STORE DI POSTMAN
-
     public function store(ProfileStoreRequest $request)
     {
         $request = $request->validated();
