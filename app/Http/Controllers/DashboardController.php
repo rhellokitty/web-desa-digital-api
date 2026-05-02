@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ResponseHelper;
 use App\Interfaces\DashboardRepositoriesInterface;
 use Exception;
-use Illuminate\Http\Request;
+
 
 class DashboardController extends Controller
 {
@@ -14,7 +14,7 @@ class DashboardController extends Controller
     public function __construct(DashboardRepositoriesInterface $dashboardRepositories)
     {
         $this->dashboardRepositories = $dashboardRepositories;
-}
+    }
 
     public function getDashboardData()
     {
