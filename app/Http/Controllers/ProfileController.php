@@ -74,4 +74,20 @@ class ProfileController extends Controller
             );
         }
     }
+
+    public function destroy(string $id)
+    {
+        try {
+            $profile = $this->profileRepositories->getProfile();
+
+            if (!$profile || $profile->id !== $id) {
+                return ResponseHelper::jsonResponse(false, 'Data Profile Tidak Ditemukan', null, 404);
+            }
+
+            $profile = $this->profileRepositories->delete($id);
+            return ResponseHelper::jsonResponse(true, 'Data Profile Berhasil Dihapus', new ProfileResource($profile), 200);
+        } catch (Exception $e) {
+            return ResponseHelper::jsonResponse(false, 'Data Profile Gagal Dihapus', null, 500);
+        }
+    }
 }

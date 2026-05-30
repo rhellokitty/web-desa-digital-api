@@ -25,6 +25,7 @@ class ProfileStoreRequest extends FormRequest
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'name' => 'required|string',
             'about' => 'required|string',
+            'address' => 'required|string',
             'headman' => 'required|string',
             'people' => 'required|integer',
             'agriculutral_area' => 'required',

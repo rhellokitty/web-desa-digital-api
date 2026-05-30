@@ -97,7 +97,7 @@ class FamilyMemberRepositories implements FamilyMemberRepositoriesInterface
             $userRepository->update($familyMember->user_id, [
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'password' => isset($data['password']) ? bcrypt($data['password']) : $familyMember->user->password
+                'password' => $data['password'] ?? null
             ]);
 
             DB::commit();

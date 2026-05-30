@@ -15,8 +15,9 @@ class ProfileImageResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'profile_id' => new ProfileResource($this->profile),
-            'image' => $this->image
+            'id' => $this->id,
+            'profile_id' => $this->profile_id,
+            'image' => asset('storage/' . $this->image)
         ];
     }
 }

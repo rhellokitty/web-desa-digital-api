@@ -19,6 +19,7 @@ class ProfileResource extends JsonResource
             'thumbnail' => asset('storage/' . $this->thumbnail),
             'name' => $this->name,
             'about' => $this->about,
+            'address' => $this->address,
             'headman' => $this->headman,
             'people' => $this->people,
             'agriculutral_area' => (float)(string) $this->agriculutral_area,

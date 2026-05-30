@@ -25,12 +25,15 @@ class ProfileUpdateRequest extends FormRequest
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'name' => 'required|string',
             'about' => 'required|string',
+            'address' => 'required|string',
             'headman' => 'required|string',
             'people' => 'required|integer',
             'agriculutral_area' => 'required',
             'total_area' => 'required|integer',
             'images' => 'nullable|array',
             'images.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'deleted_images' => 'nullable|array',
+            'deleted_images.*' => 'required|uuid|exists:profile_images,id',
         ];
     }
 }

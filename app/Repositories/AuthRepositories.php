@@ -49,7 +49,7 @@ class AuthRepositories implements AuthRepositoriesInterface
 
             $permissions = $user->roles->flatMap->permissions->pluck('name');
 
-            $role = $user->roles->first()->name;
+            $role = $user->roles->first()?->name;
 
             return response()->json([
                 'message' => 'User Data',

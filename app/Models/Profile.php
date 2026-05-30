@@ -15,6 +15,7 @@ class Profile extends Model
         'name',
         'about',
         'headman',
+        'address',
         'people',
         'agriculutral_area',
         'total_area',

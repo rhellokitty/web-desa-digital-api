@@ -71,7 +71,12 @@ class HeadOfFamilyRepositories implements HeadOfFamilyRepositoriesInterface
             $headOfFamily->phone_number = $data['phone_number'];
             $headOfFamily->occupation = $data['occupation'];
             $headOfFamily->marital_status = $data['marital_status'];
+
+            $user->assignRole('head-of-family');
+            
             $headOfFamily->save();
+
+
             DB::commit();
             return $headOfFamily;
         } catch (Exception $e) {
@@ -105,7 +110,7 @@ class HeadOfFamilyRepositories implements HeadOfFamilyRepositoriesInterface
             $userRepository->update($headOfFamily->user_id, [
                 'name' => $data['name'],
                 'email' => $data['email'] ?? $headOfFamily->user->email,
-                'password' => isset($data['password']) ? bcrypt($data['password']) : $headOfFamily->user->password
+                'password' => $data['password'] ?? null
             ]);
 
             DB::commit();
