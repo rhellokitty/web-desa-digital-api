@@ -46,8 +46,8 @@ class ProfileController extends Controller
                 'Data Profile Gagal Ditambahkan',
                 [
                     'error' => $e->getMessage(),
-                    'file'  => $e->getFile(),
-                    'line'  => $e->getLine(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
                 ],
                 500
             );
@@ -67,8 +67,8 @@ class ProfileController extends Controller
                 'Data Profile Gagal Diupdate',
                 [
                     'error' => $e->getMessage(),
-                    'file'  => $e->getFile(),
-                    'line'  => $e->getLine(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
                 ],
                 500
             );

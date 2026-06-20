@@ -63,7 +63,7 @@ class ProfileRepositories implements ProfileRepositoriesInterface
         DB::beginTransaction();
 
         try {
-            $profile = Profile::first();
+            $profile = Profile::with('profileImages')->first();
 
             if (isset($data['thumbnail'])) {
                 $this->deleteFile($profile->thumbnail);
@@ -79,7 +79,7 @@ class ProfileRepositories implements ProfileRepositoriesInterface
             $profile->total_area = $data['total_area'];
 
             if (!empty($data['deleted_images'])) {
-                $imagesToDelete = ProfileImage::where('profile_id', $profile->id)
+                $imagesToDelete = $profile->profileImages()
                     ->whereIn('id', $data['deleted_images'])
                     ->get();
 

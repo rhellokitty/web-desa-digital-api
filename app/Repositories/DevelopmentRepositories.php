@@ -6,6 +6,7 @@ use App\Interfaces\DevelopmentRepositoriesInterface;
 use App\Models\Development;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class DevelopmentRepositories implements DevelopmentRepositoriesInterface
 {
@@ -29,6 +30,13 @@ class DevelopmentRepositories implements DevelopmentRepositoriesInterface
         return $query;
     }
 
+    private function deleteFile(?string $path)
+    {
+        if ($path && Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+    }
+
     public function getAllPaginated(
         ?string $search,
         ?int $rowPerPage
@@ -39,8 +47,8 @@ class DevelopmentRepositories implements DevelopmentRepositoriesInterface
 
     public function getById(string $id)
     {
-        $query = Development::where('id', $id)->with('developmentApplicants.user');
-        return $query->first();
+        return Development::with('developmentApplicants.user')
+            ->find($id);
     }
 
     public function create(array $data)
@@ -75,6 +83,7 @@ class DevelopmentRepositories implements DevelopmentRepositoriesInterface
             $development = Development::find($id);
 
             if (isset($data['thumbnail'])) {
+                $this->deleteFile($development->thumbnail);
                 $development->thumbnail = $data['thumbnail']->store('assets/development', 'public');
             }
 
