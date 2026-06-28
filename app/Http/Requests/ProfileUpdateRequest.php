@@ -22,7 +22,7 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
             'name' => 'required|string',
             'about' => 'required|string',
             'address' => 'required|string',
