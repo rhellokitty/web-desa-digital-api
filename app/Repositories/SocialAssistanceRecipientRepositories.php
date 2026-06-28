@@ -10,8 +10,11 @@ use Illuminate\Support\Facades\DB;
 class SocialAssistanceRecipientRepositories implements SocialAssistanceRecipientRepositoriesInterface
 {
 
-    public function getAll(?string $search, ?int $limit, bool $execute)
-    {
+    public function getAll(
+        ?string $search,
+        ?int $limit,
+        bool $execute
+    ) {
 
         $query = SocialAssistanceRecipient::where(
             function ($query) use ($search) {
