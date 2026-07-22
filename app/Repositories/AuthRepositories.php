@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Resources\HeadOfFamilyResource;
 use App\Interfaces\AuthRepositoriesInterface;
 use Illuminate\Support\Facades\Auth;
 
@@ -58,12 +59,16 @@ class AuthRepositories implements AuthRepositoriesInterface
                     'name' => $user->name,
                     'email' => $user->email,
                     'permissions' => $permissions,
-                    'role' => $role
+                    'role' => $role,
+                    'head_of_family' => new HeadOfFamilyResource($user->headOfFamily)
                 ],
             ]);
         }
-        return response([
-            'message' => 'You are not logged in',
-        ]);
+        return response(
+            [
+                'message' => 'You are not logged in',
+            ],
+            401
+        );
     }
 }
