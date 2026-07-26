@@ -18,8 +18,13 @@ class FamilyMemberRepositories implements FamilyMemberRepositoriesInterface
         })->with('headOfFamily');
 
         if (auth()->user()->hasRole('head-of-family')) {
-            $query->where('head_of_family_id', auth()->user()->headOfFamily()->id);
+            $headOfFamily = auth()->user()->headOfFamily;
+
+            if ($headOfFamily) {
+                $query->where('head_of_family_id', $headOfFamily->id);
+            }
         }
+
 
         if ($limit) {
             $query->limit($limit);
