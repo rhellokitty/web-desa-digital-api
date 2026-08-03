@@ -16,14 +16,16 @@ class FamilyMemberRepositories implements FamilyMemberRepositoriesInterface
                 $query->search($search);
             }
         })->with('headOfFamily');
-
         if (auth()->user()->hasRole('head-of-family')) {
             $headOfFamily = auth()->user()->headOfFamily;
 
             if ($headOfFamily) {
                 $query->where('head_of_family_id', $headOfFamily->id);
+            } else {
+                $query->whereRaw('1 = 0');
             }
         }
+
 
 
         if ($limit) {
