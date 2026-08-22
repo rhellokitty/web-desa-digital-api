@@ -58,7 +58,6 @@ class User extends Authenticatable
         ;
     }
 
-
     public function headOfFamily()
     {
         return $this->hasOne(HeadOfFamily::class);

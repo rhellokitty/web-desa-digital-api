@@ -20,7 +20,8 @@ class EventParticipantResource extends JsonResource
             'head_of_family' => new HeadOfFamilyResource($this->headOfFamily),
             'quantity' => $this->quantity,
             'total_price' => $this->total_price,
-            'payment_status' => $this->payment_status
+            'payment_status' => $this->payment_status,
+            'created_at' => $this->created_at
         ];
     }
 }

@@ -26,8 +26,6 @@ class FamilyMemberRepositories implements FamilyMemberRepositoriesInterface
             }
         }
 
-
-
         if ($limit) {
             $query->limit($limit);
         }
