@@ -15,7 +15,7 @@ class FamilyMemberRepositories implements FamilyMemberRepositoriesInterface
             if ($search) {
                 $query->search($search);
             }
-        })->with('headOfFamily');
+        })->with('headOfFamily', 'user');
         if (auth()->user()->hasRole('head-of-family')) {
             $headOfFamily = auth()->user()->headOfFamily;
 
@@ -44,7 +44,7 @@ class FamilyMemberRepositories implements FamilyMemberRepositoriesInterface
 
     public function getById(string $id)
     {
-        $query = FamilyMember::where('id', $id)->with('headOfFamily');
+        $query = FamilyMember::where('id', $id)->with('headOfFamily', 'user');
         return $query->first();
     }
 
