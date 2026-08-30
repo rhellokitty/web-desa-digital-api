@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class FamilyMemberStoreRequest extends FormRequest
 {
@@ -54,4 +55,15 @@ class FamilyMemberStoreRequest extends FormRequest
             'relation' => 'Hubungan',
         ];
     }
+
+    public function prepareForValidation()
+    {
+        $user = Auth::user();
+
+        if ($user->hasRole('head-of-family')) {
+            $this->merge(['head_of_family_id' => $user->headOfFamily->id]);
+        }
+    }
+
+
 }
