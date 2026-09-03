@@ -59,7 +59,14 @@ class SocialAssistanceRecipientRepositories implements SocialAssistanceRecipient
 
     public function getById(string $id)
     {
-        $query = SocialAssistanceRecipient::where('id', $id)->with('socialAssistance', 'headOfFamily');
+        $query = SocialAssistanceRecipient::where('id', $id)
+            ->with(
+                [
+                    'socialAssistance.socialAssistanceRecipients',
+                    'headOfFamily.user',
+                    'headOfFamily.familyMembers.user'
+                ]
+            );
         return $query->first();
     }
 
