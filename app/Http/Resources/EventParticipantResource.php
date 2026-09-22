@@ -21,7 +21,8 @@ class EventParticipantResource extends JsonResource
             'quantity' => $this->quantity,
             'total_price' => $this->total_price,
             'payment_status' => $this->payment_status,
-            'created_at' => $this->created_at
+            'created_at' => $this->created_at,
+            'snap_token' => $this->snap_token
         ];
     }
 }

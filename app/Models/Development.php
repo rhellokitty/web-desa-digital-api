@@ -30,6 +30,6 @@ class Development extends Model
 
     public function developmentApplicants()
     {
-        return $this->hasMany(DevelopmentApplicant::class);
+        return $this->hasMany(DevelopmentApplicant::class)->latest();
     }
 }

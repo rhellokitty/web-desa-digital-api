@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class EventParticipantStoreRequest extends FormRequest
 {
@@ -35,5 +36,14 @@ class EventParticipantStoreRequest extends FormRequest
             'head_of_family_id' => 'Head of Family ID',
             'quantity' => 'Quantity',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $user = Auth::user();
+
+        if ($user->hasRole('head-of-family')) {
+            $this->merge(['head_of_family_id' => $user->headOfFamily->id]);
+        }
     }
 }
