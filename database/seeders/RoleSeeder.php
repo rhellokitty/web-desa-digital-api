@@ -13,16 +13,31 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::firstOrCreate([
+        $adminRole = Role::firstOrCreate([
             'name' => 'admin',
             'guard_name' => 'sanctum',
-        ])->givePermissionTo(Permission::all());
+        ]);
+        
+        $allPermissions = Permission::all()->reject(function ($permission) {
+            return in_array($permission->name, [
+                'family-member-menu',
+                'family-member-list',
+                'family-member-create',
+                'family-member-edit',
+                'family-member-delete'
+            ]);
+        });
+        
+        $adminRole->syncPermissions($allPermissions);
 
         Role::firstOrCreate([
             'name' => 'head-of-family',
             'guard_name' => 'sanctum',
         ])->givePermissionTo([
             'dashboard-menu',
+
+            'head-of-family-list',
+            'head-of-family-edit',
 
             'family-member-menu',
             'family-member-list',
