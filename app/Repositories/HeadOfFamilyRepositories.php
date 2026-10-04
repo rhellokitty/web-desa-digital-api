@@ -73,7 +73,7 @@ class HeadOfFamilyRepositories implements HeadOfFamilyRepositoriesInterface
             $headOfFamily->marital_status = $data['marital_status'];
 
             $user->assignRole('head-of-family');
-            
+
             $headOfFamily->save();
 
 
@@ -93,7 +93,7 @@ class HeadOfFamilyRepositories implements HeadOfFamilyRepositoriesInterface
             $headOfFamily = HeadOfFamily::find($id);
 
             if (isset($data['profile_picture'])) {
-                $this->deleteFile($headOfFamily->profile_picture); // ← hapus foto lama
+                $this->deleteFile($headOfFamily->profile_picture);
                 $headOfFamily->profile_picture = $data['profile_picture']->store('assets/head-of-families', 'public');
             }
 

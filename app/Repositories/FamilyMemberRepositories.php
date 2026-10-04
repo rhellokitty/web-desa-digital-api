@@ -6,9 +6,17 @@ use App\Interfaces\FamilyMemberRepositoriesInterface;
 use App\Models\FamilyMember;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class FamilyMemberRepositories implements FamilyMemberRepositoriesInterface
 {
+
+    private function deleteFile(?string $path): void
+    {
+        if ($path && Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+    }
     public function getAll(?string $search, ?int $limit, bool $execute)
     {
         $query = FamilyMember::where(function ($query) use ($search) {
@@ -89,6 +97,7 @@ class FamilyMemberRepositories implements FamilyMemberRepositoriesInterface
             $familyMember = FamilyMember::find($id);
 
             if (isset($data['profile_picture'])) {
+                $this->deleteFile($familyMember->profile_picture);
                 $familyMember->profile_picture = $data['profile_picture']->store('assets/family-members', 'public');
             }
 
@@ -122,6 +131,7 @@ class FamilyMemberRepositories implements FamilyMemberRepositoriesInterface
         DB::beginTransaction();
         try {
             $familyMember = FamilyMember::find($id);
+            $this->deleteFile($familyMember->profile_picture);
             $familyMember->delete();
 
             DB::commit();
