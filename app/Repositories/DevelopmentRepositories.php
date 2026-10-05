@@ -68,7 +68,7 @@ class DevelopmentRepositories implements DevelopmentRepositoriesInterface
 
     public function getById(string $id)
     {
-        return Development::with('developmentApplicants.user')
+        return Development::with(['developmentApplicants.user.headOfFamily', 'developmentApplicants.user.familyMembers'])
             ->find($id);
     }
 

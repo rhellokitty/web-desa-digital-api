@@ -17,7 +17,9 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'email' => $this->email
+            'email' => $this->email,
+            'head_of_family' => new HeadOfFamilyResource($this->whenLoaded('headOfFamily')),
+            'family_member' => new FamilyMemberResource($this->whenLoaded('familyMembers')),
         ];
     }
 }

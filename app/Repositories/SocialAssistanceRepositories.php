@@ -40,7 +40,7 @@ class SocialAssistanceRepositories implements SocialAssistanceRepositoriesInterf
 
     public function getById(string $id)
     {
-        $query = SocialAssistance::where('id', $id)->with('socialAssistanceRecipients');
+        $query = SocialAssistance::where('id', $id)->with('socialAssistanceRecipients.headOfFamily.user');
         return $query->first();
     }
 
