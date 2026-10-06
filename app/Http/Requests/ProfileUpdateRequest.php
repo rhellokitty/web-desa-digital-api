@@ -22,7 +22,7 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'name' => 'required|string',
             'about' => 'required|string',
             'address' => 'required|string',
@@ -31,7 +31,7 @@ class ProfileUpdateRequest extends FormRequest
             'agriculutral_area' => 'required',
             'total_area' => 'required|integer',
             'images' => 'nullable|array',
-            'images.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'images.*' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
             'deleted_images' => 'nullable|array',
             'deleted_images.*' => 'required|uuid|exists:profile_images,id',
         ];
